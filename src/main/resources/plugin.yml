@@ -1,0 +1,10 @@
+name: BetterCinematics
+main: me.marquez.bettercinematics.CinematicPlugin
+version: ${version}
+api-version: ${minecraft.version}
+author: DevMarquez
+depend: [ProtocolLib]
+commands:
+  bcinematics:
+    aliases: bc
+    description: BetterCinematics's default commands

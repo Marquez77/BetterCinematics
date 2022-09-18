@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import me.marquez.bettercinematics.entity.Cinematic;
+import me.marquez.bettercinematics.utils.ParticleUtils;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import java.util.function.BiConsumer;
@@ -28,8 +31,14 @@ public class BasicPreviewType implements PreviewType {
         playEffect.accept(cinematic, player);
     }
 
+    private static ParticleUtils POSITION_PARTICLE = ParticleUtils.builder()
+            .particle(Particle.REDSTONE)
+            .data(new Particle.DustOptions(Color.RED, 1F))
+            .build();
     enum Types {
-        POSITION("pos", (cinematic, player) -> {}), //SCENE POSITION (POINT)
+        POSITION("pos", (cinematic, player) -> {
+            cinematic.getPositions().forEach(loc -> POSITION_PARTICLE.showParticle(loc, player));
+        }), //SCENE POSITION (POINT)
         DIRECTION("dir", (cinematic, player) -> {}), //DIRECTION OF PLAYER LOOKS
         LINE("line", (cinematic, player) -> {}), //LINE OF POINT TO POINT
         CURVE("curve", (cinematic, player) -> {}); //THE CURVES APPLIED EASE

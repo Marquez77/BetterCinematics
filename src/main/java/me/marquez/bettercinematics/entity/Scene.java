@@ -1,19 +1,17 @@
 package me.marquez.bettercinematics.entity;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.bukkit.Location;
+import lombok.*;
+import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 
 @Getter
 @RequiredArgsConstructor
+@ToString
 public class Scene {
 
     @NonNull
-    private Location from;
+    private WrappedLocation from;
     @NonNull
-    private Location to;
+    private WrappedLocation to;
     @Setter
     private double speed;
 

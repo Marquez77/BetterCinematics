@@ -37,7 +37,7 @@ public class BasicPreviewType implements PreviewType {
             .build();
     enum Types {
         POSITION("pos", (cinematic, player) -> {
-            cinematic.getPositions().forEach(loc -> POSITION_PARTICLE.showParticle(loc, player));
+            cinematic.getPositions().forEach(loc -> POSITION_PARTICLE.showParticle(loc.toBukkitLocation(), player));
         }), //SCENE POSITION (POINT)
         DIRECTION("dir", (cinematic, player) -> {}), //DIRECTION OF PLAYER LOOKS
         LINE("line", (cinematic, player) -> {}), //LINE OF POINT TO POINT

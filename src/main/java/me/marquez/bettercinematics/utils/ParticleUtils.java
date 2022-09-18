@@ -2,6 +2,7 @@ package me.marquez.bettercinematics.utils;
 
 import lombok.Builder;
 import lombok.NonNull;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
@@ -17,7 +18,8 @@ public class ParticleUtils {
     private double extra = 0D; //normally speed
     private Object data = null;
 
-    public void showParticle(org.bukkit.Location location, Player player) {
+    public void showParticle(Location location, Player player) {
+        if(location == null || location.getWorld() == null || !location.getWorld().equals(player.getWorld())) return;
         player.spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, extra, data);
     }
 

@@ -1,6 +1,7 @@
 package me.marquez.bettercinematics.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.NonNull;
@@ -11,7 +12,11 @@ import java.util.concurrent.Executors;
 
 public class FileUtils {
 
-    private static final Gson gson = new Gson();
+    private static final Gson gson;
+
+    static {
+        gson = new GsonBuilder().setPrettyPrinting().create();
+    }
 
     public static <T> T loadFromJson(@NonNull File file, @NonNull Class<? extends T> clazz) throws IOException {
         return gson.fromJson(JsonParser.parseReader(new FileReader(file)), clazz);
@@ -35,10 +40,16 @@ public class FileUtils {
             try {
                 if(!file.exists()) {
                     File parentFile = file.getParentFile();
-                    if(!parentFile.exists() && !parentFile.mkdirs()) throw new IOException("Can not make directories");
+                    if(parentFile != null && !parentFile.exists() && !parentFile.mkdirs()) throw new IOException("Can not make directories");
                     if(!file.createNewFile()) throw new IOException("Can not create new file");
                 }
-                gson.toJson(object, clazz, new FileWriter(file, true));
+                FileWriter clearWriter = new FileWriter(file);
+                clearWriter.write("");
+                clearWriter.close();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+                gson.toJson(object, clazz, writer);
+                writer.flush();
+                writer.close();
                 future.complete(null);
             } catch (Exception e) {
                 future.completeExceptionally(e);

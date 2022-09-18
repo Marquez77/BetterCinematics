@@ -2,10 +2,9 @@ package me.marquez.bettercinematics.entity;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import org.bukkit.Location;
+import lombok.ToString;
+import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
+@ToString
 public class Cinematic {
 
     private boolean enabled;
@@ -30,7 +30,7 @@ public class Cinematic {
         this.freeAngle = false;
     }
 
-    public Set<Location> getPositions() {
+    public Set<WrappedLocation> getPositions() {
         return sceneList.stream().flatMap(scene -> Stream.of(scene.getFrom(), scene.getTo())).collect(Collectors.toSet());
     }
 }

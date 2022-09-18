@@ -2,7 +2,9 @@ package me.marquez.bettercinematics;
 
 import me.marquez.bettercinematics.entity.Cinematic;
 import me.marquez.bettercinematics.entity.Scene;
+import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 import me.marquez.bettercinematics.utils.FileUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -78,7 +80,7 @@ public class BetterCinematics extends JavaPlugin {
                             return;
                         }
                         List<Scene> list = cinematic.getSceneList();
-                        list.add(new Scene(from, to));
+                        list.add(new Scene(WrappedLocation.of(from), WrappedLocation.of(to)));
                         sender.sendMessage("Added scene " + list.size());
                     }, () -> {
                         sender.sendMessage("Not exists " + args[1]);
@@ -97,6 +99,12 @@ public class BetterCinematics extends JavaPlugin {
                         });
                     }, () -> {
                         sender.sendMessage("Not exists " + args[1]);
+                    });
+                    break;
+                }
+                case "list": {
+                    cinematicMap.forEach((k, v) -> {
+                        sender.sendMessage(v.toString());
                     });
                     break;
                 }

@@ -8,7 +8,6 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.google.common.collect.ImmutableList;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.minecraft.core.Rotations;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
-public class CinematicPlugin extends JavaPlugin {
+public class TrashCode extends JavaPlugin {
 
     private final Map<UUID, Player> playing = new ConcurrentHashMap<>();
 

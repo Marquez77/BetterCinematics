@@ -19,6 +19,7 @@
   - /bc ease \(basic/bezier) - 부드러운 곡선으로 연출합니다.
   - /bc mode \(primitive/better/super) - 시네마틱 방식을 설정합니다.
   - /bc angle \[\(true/false)] - 화면 고정 여부를 설정합니다.
+  - /bc save - 설정한 내용을 저장하고 재생을 위한 계산을 시작합니다.
 - /bc tp \<scene-index> \[\(from/to)] - 해당 위치로 이동합니다.
 - /bc preview \<name> \(all/pos/dir/line/curve) - 이동 동선을 확인합니다.
 - /bc play \<name> \<duration> \[frame-interval] \[player] - 해당 시간동안 시네마틱을 재생합니다.

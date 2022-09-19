@@ -1,14 +1,17 @@
 package me.marquez.bettercinematics.entity;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import me.marquez.bettercinematics.functions.LinearFunction;
 import org.bukkit.Location;
 
-import java.util.List;
+import java.util.function.Function;
 
+@Getter
 public class CalculatedCinematic extends Cinematic{
 
-    private List<Location> vectors;
+    @Setter
+    private LinearFunction lineFunction;
+    private Function<Double, Location> splineFunction;
 
     public CalculatedCinematic(@NonNull String name) {
         super(name);

@@ -3,6 +3,8 @@ package me.marquez.bettercinematics;
 import me.marquez.bettercinematics.entity.Cinematic;
 import me.marquez.bettercinematics.entity.Scene;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
+import me.marquez.bettercinematics.preview.BasicPreviewType;
+import me.marquez.bettercinematics.preview.CinematicPreview;
 import me.marquez.bettercinematics.utils.FileUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -25,6 +27,7 @@ public class BetterCinematics extends JavaPlugin {
     @Override
     public void onEnable() {
         getCommand("bcm").setExecutor(this);
+        BasicPreviewType.initialize();
         File cinematicDirectory = new File(getDataFolder(), "cinematics");
         if(cinematicDirectory.exists()) {
             File[] files = cinematicDirectory.listFiles();
@@ -87,6 +90,14 @@ public class BetterCinematics extends JavaPlugin {
                     });
                     break;
                 }
+                case "calc": {
+                    cinematicMap.computeIfPresent(args[1], (k, cinematic) -> {
+                        sender.sendMessage("Calculating...");
+                       return cinematic.calculate();
+                    });
+                    sender.sendMessage("Calculated.");
+                    break;
+                }
                 case "save": {
                     Optional.ofNullable(cinematicMap.get(args[1])).ifPresentOrElse(cinematic -> {
                         FileUtils.saveToJsonAsync(new File(getDataFolder(), "cinematics/" + cinematic.getName() + ".json"), Cinematic.class, cinematic).whenCompleteAsync((unused, throwable) -> {
@@ -103,13 +114,28 @@ public class BetterCinematics extends JavaPlugin {
                     break;
                 }
                 case "list": {
+
                     cinematicMap.forEach((k, v) -> {
                         sender.sendMessage(v.toString());
                     });
+                    break;
+                }
+                case "preview": {
+                    if(args[1].equals("stop")) {
+                        preview.interrupt();
+                        sender.sendMessage("Stop preview");
+                        break;
+                    }
+                    Cinematic cinematic = cinematicMap.get(args[1]);
+                    preview = new CinematicPreview(((Player)sender), cinematic);
+                    preview.start();
+                    sender.sendMessage("Start preview");
                     break;
                 }
             }
         }
         return true;
     }
+
+    private CinematicPreview preview;
 }

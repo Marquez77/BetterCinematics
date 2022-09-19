@@ -19,7 +19,7 @@ public class CinematicPreview extends Thread {
     private Player viewer;
     @NonNull
     private Cinematic cinematic;
-    private Set<PreviewType> types = new HashSet<>(PreviewType.ALL);
+    private Set<PreviewType> types = PreviewTypeRegistry.getAllTypes();
 
     @Override
     public void run() {

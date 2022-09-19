@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 import me.marquez.bettercinematics.functions.LinearFunction;
+import me.marquez.bettercinematics.player.CinematicPlayer;
 import org.bukkit.Location;
 
 import java.util.LinkedList;
@@ -50,5 +51,14 @@ public class Cinematic {
         cinematic.freeAngle = freeAngle;
         cinematic.setLineFunction(new LinearFunction(getPositions()));
         return cinematic;
+    }
+
+    public CinematicPlayer getPlayer() {
+        return mode.getPlayer();
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

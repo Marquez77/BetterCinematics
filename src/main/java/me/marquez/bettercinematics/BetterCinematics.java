@@ -1,6 +1,8 @@
 package me.marquez.bettercinematics;
 
+import me.marquez.bettercinematics.entity.CalculatedCinematic;
 import me.marquez.bettercinematics.entity.Cinematic;
+import me.marquez.bettercinematics.entity.PlayOptions;
 import me.marquez.bettercinematics.entity.Scene;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 import me.marquez.bettercinematics.preview.BasicPreviewType;
@@ -24,8 +26,15 @@ public class BetterCinematics extends JavaPlugin {
 
     private Map<String, Cinematic> cinematicMap = new HashMap<>();
 
+    private static BetterCinematics instance;
+
+    public static BetterCinematics getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
+        instance = this;
         getCommand("bcm").setExecutor(this);
         BasicPreviewType.initialize();
         File cinematicDirectory = new File(getDataFolder(), "cinematics");
@@ -131,6 +140,10 @@ public class BetterCinematics extends JavaPlugin {
                     preview.start();
                     sender.sendMessage("Start preview");
                     break;
+                }
+                case "play": {
+                    CalculatedCinematic cinematic = (CalculatedCinematic)cinematicMap.get(args[1]);
+                    cinematic.getPlayer().play(cinematic, ((Player)sender), PlayOptions.builder().interval(Long.parseLong(args[2])).duration(Long.parseLong(args[3])).build());
                 }
             }
         }

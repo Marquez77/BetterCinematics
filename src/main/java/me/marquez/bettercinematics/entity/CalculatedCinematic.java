@@ -16,4 +16,8 @@ public class CalculatedCinematic extends Cinematic{
     public CalculatedCinematic(@NonNull String name) {
         super(name);
     }
+
+    public Function<Double, Location> getFunction() {
+        return splineFunction == null ? lineFunction : splineFunction;
+    }
 }

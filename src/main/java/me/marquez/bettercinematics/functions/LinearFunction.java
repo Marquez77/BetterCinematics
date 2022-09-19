@@ -60,8 +60,8 @@ public class LinearFunction implements Function<Double, Location> {
         Location fromLoc = points.get(i);
         Location toLoc = points.get(i+1);
         Location resultLoc = fromLoc.clone().add(vectors.get(i).clone().multiply(ratio));
-        resultLoc.setYaw((float)((toLoc.getYaw()-fromLoc.getYaw())*ratio));
-        resultLoc.setPitch((float)((toLoc.getPitch()-fromLoc.getPitch())*ratio));
+        resultLoc.setYaw(fromLoc.getYaw()+(toLoc.getYaw()-fromLoc.getYaw())*(float)ratio);
+        resultLoc.setPitch(fromLoc.getPitch()+(toLoc.getPitch()-fromLoc.getPitch())*(float)ratio);
         return resultLoc;
     }
 }

@@ -28,7 +28,7 @@ public class LinearFunction implements Function<Double, Location> {
                 double distance = from.distance(to);
                 sum += distance;
                 sections.add(sum);
-                vectors.add(to.subtract(from).toVector());
+                vectors.add(to.clone().subtract(from).toVector());
             }
         }
     }
@@ -50,6 +50,6 @@ public class LinearFunction implements Function<Double, Location> {
         double to = sections.get(i+1);
         double distance = to-from;
         double ratio = (t-from)/distance;
-        return points.get(i).clone().add(vectors.get(i).multiply(ratio));
+        return points.get(i).clone().add(vectors.get(i).clone().multiply(ratio));
     }
 }

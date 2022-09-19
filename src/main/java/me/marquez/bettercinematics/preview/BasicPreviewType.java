@@ -47,6 +47,7 @@ public class BasicPreviewType implements PreviewType {
         LINE("line", (cinematic, player) -> {
             if(cinematic instanceof CalculatedCinematic cc) {
                 cc.getLineFunction().getAllLine(0.5D).forEach(loc -> LINE_PARTICLE.showParticle(loc, player));
+                //PreviewOption 등 만들어서 여러가지 설정할 수 있게 하기
             }
         }), //LINE OF POINT TO POINT
         DIRECTION("dir", (cinematic, player) -> {}), //DIRECTION OF PLAYER LOOKS

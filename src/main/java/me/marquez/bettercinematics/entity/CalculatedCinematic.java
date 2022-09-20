@@ -11,6 +11,7 @@ public class CalculatedCinematic extends Cinematic{
 
     @Setter
     private LinearFunction lineFunction;
+    @Setter
     private Function<Double, Location> splineFunction;
 
     public CalculatedCinematic(@NonNull String name) {

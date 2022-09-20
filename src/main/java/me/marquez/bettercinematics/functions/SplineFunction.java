@@ -1,13 +1,20 @@
 package me.marquez.bettercinematics.functions;
 
+import me.marquez.bettercinematics.utils.SplineUtils;
 import org.bukkit.Location;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class SplineFunction implements PathFunction {
 
-    public SplineFunction() {
+    Function<Double, SplineUtils.XY> splineFunction;
 
+    List<Location> position;
+
+    public SplineFunction(List<Location> position) {
+        this.position = position;
+        splineFunction = SplineUtils.getCubicSpline(position.stream().map(loc -> new SplineUtils.XY(loc.getX(), loc.getZ())).toList());
     }
 
 
@@ -23,6 +30,10 @@ public class SplineFunction implements PathFunction {
 
     @Override
     public Location apply(Double aDouble) {
-        return null;
+        SplineUtils.XY pos = splineFunction.apply(aDouble);
+        int index = (int)aDouble.doubleValue();
+        double y = position.get(index).getY();
+        y = y+(position.get(index+1).getY()-y)*(aDouble-index);
+        return new Location(position.get(0).getWorld(), pos.getFirst(), y, pos.getSecond());
     }
 }

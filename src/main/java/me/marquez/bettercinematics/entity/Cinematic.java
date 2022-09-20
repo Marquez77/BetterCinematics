@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 import me.marquez.bettercinematics.functions.LinearFunction;
+import me.marquez.bettercinematics.functions.SplineFunction;
 import me.marquez.bettercinematics.player.CinematicPlayer;
 import org.bukkit.Location;
 
@@ -50,6 +51,8 @@ public class Cinematic {
         cinematic.mode = mode;
         cinematic.freeAngle = freeAngle;
         cinematic.setLineFunction(new LinearFunction(getPositions()));
+        cinematic.setSplineFunction(new SplineFunction(getPositions()));
+
         return cinematic;
     }
 

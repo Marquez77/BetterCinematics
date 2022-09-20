@@ -37,11 +37,16 @@ public class BasicPreviewType implements PreviewType {
 
     private static ParticleUtils POSITION_PARTICLE = ParticleUtils.builder()
             .particle(Particle.REDSTONE)
-            .data(new Particle.DustOptions(Color.RED, 1F))
+            .data(new Particle.DustOptions(Color.RED, 10F))
+            .count(10)
             .build();
     private static ParticleUtils LINE_PARTICLE = ParticleUtils.builder()
             .particle(Particle.REDSTONE)
             .data(new Particle.DustOptions(Color.BLUE, 1F))
+            .build();
+    private static ParticleUtils CURVE_PARTICLE = ParticleUtils.builder()
+            .particle(Particle.REDSTONE)
+            .data(new Particle.DustOptions(Color.GREEN, 1F))
             .build();
     enum Types {
         POSITION("pos", (cinematic, player) -> {
@@ -58,7 +63,8 @@ public class BasicPreviewType implements PreviewType {
             if(cinematic instanceof CalculatedCinematic cc) {
                 double t = 0;
                 while(t < cc.getPositions().size()-1) {
-                    LINE_PARTICLE.showParticle(cc.getSplineFunction().apply(t), player);
+                    CURVE_PARTICLE.showParticle(cc.getSplineFunction().apply(t), player);
+                    t += 0.01;
                 }
             }
         }); //THE CURVES APPLIED EASE

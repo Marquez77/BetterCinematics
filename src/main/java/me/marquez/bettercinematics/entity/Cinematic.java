@@ -10,9 +10,7 @@ import me.marquez.bettercinematics.functions.SplineFunction;
 import me.marquez.bettercinematics.player.CinematicPlayer;
 import org.bukkit.Location;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,8 +38,8 @@ public class Cinematic {
         return sceneList.stream().flatMap(scene -> Stream.of(scene.getFrom(), scene.getTo())).collect(Collectors.toSet());
     }
 
-    public List<Location> getPositions() {
-        return sceneList.stream().flatMap(scene -> Stream.of(scene.getFrom().toBukkitLocation(), scene.getTo().toBukkitLocation())).toList();
+    public Set<Location> getPositions() {
+        return new LinkedHashSet<>(sceneList.stream().flatMap(scene -> Stream.of(scene.getFrom().toBukkitLocation(), scene.getTo().toBukkitLocation())).toList());
     }
 
     public CalculatedCinematic calculate() {
@@ -50,8 +48,8 @@ public class Cinematic {
         cinematic.sceneList = sceneList;
         cinematic.mode = mode;
         cinematic.freeAngle = freeAngle;
-        cinematic.setLineFunction(new LinearFunction(getPositions()));
-        cinematic.setSplineFunction(new SplineFunction(getPositions()));
+        cinematic.setLineFunction(new LinearFunction(new ArrayList<>(getPositions())));
+        cinematic.setSplineFunction(new SplineFunction(new ArrayList<>(getPositions())));
 
         return cinematic;
     }

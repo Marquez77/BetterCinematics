@@ -35,7 +35,6 @@ public class SplineUtils {
                 while (i <= points.size() - 3) { //The last when i+3 == points.size()
                     double[][] result = MathUtils.matrixMultiply(cubicMatrix, makeMatrix(points.subList(i - 1, i + 3))); //i-1, i, i+1, i+2
                     functions.add(t -> {
-                        System.out.println(t);
                         return new XY(executeCubic(t, result));
                     });
                     i++;

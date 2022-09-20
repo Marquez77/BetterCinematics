@@ -35,7 +35,12 @@ public class BetterCinematics extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        getCommand("bcm").setExecutor(this);
+        if(getServer().getPluginManager().getPlugin("ProtocolLib") == null) {
+            getLogger().warning("Can not found dependency ProtocolLib.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        Optional.ofNullable(getCommand("bcm")).ifPresent(command -> command.setExecutor(this));
         BasicPreviewType.initialize();
         File cinematicDirectory = new File(getDataFolder(), "cinematics");
         if(cinematicDirectory.exists()) {

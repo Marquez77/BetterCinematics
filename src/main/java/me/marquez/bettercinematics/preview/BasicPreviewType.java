@@ -6,8 +6,11 @@ import lombok.Setter;
 import me.marquez.bettercinematics.entity.CalculatedCinematic;
 import me.marquez.bettercinematics.entity.Cinematic;
 import me.marquez.bettercinematics.utils.ParticleUtils;
+import me.marquez.bettercinematics.utils.SplineUtils;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -51,7 +54,14 @@ public class BasicPreviewType implements PreviewType {
             }
         }), //LINE OF POINT TO POINT
         DIRECTION("dir", (cinematic, player) -> {}), //DIRECTION OF PLAYER LOOKS
-        CURVE("curve", (cinematic, player) -> {}); //THE CURVES APPLIED EASE
+        CURVE("curve", (cinematic, player) -> {
+            if(cinematic instanceof CalculatedCinematic cc) {
+                double t = 0;
+                while(t < cc.getPositions().size()-1) {
+                    LINE_PARTICLE.showParticle(cc.getSplineFunction().apply(t), player);
+                }
+            }
+        }); //THE CURVES APPLIED EASE
 
         @NonNull
         @Getter

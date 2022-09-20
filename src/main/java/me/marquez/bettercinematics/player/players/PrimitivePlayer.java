@@ -1,9 +1,10 @@
-package me.marquez.bettercinematics.player;
+package me.marquez.bettercinematics.player.players;
 
 import lombok.NonNull;
 import me.marquez.bettercinematics.BetterCinematics;
 import me.marquez.bettercinematics.entity.CalculatedCinematic;
 import me.marquez.bettercinematics.entity.PlayOptions;
+import me.marquez.bettercinematics.player.CachedCinematicPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

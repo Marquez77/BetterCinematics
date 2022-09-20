@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.marquez.bettercinematics.player.CinematicPlayer;
-import me.marquez.bettercinematics.player.PrimitivePlayer;
+import me.marquez.bettercinematics.player.players.PrimitivePlayer;
 
 @RequiredArgsConstructor
 public enum CinematicMode {
@@ -15,5 +15,5 @@ public enum CinematicMode {
 
     @NonNull
     @Getter
-    private CinematicPlayer player;
+    private final CinematicPlayer player;
 }

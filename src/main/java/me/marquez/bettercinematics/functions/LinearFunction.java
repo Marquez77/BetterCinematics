@@ -4,12 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
 
-public class LinearFunction implements Function<Double, Location> {
+public class LinearFunction implements PathFunction {
 
     private final List<Location> points;
     private final List<Double> sections;
@@ -37,6 +34,7 @@ public class LinearFunction implements Function<Double, Location> {
         }
     }
 
+    @Override
     public List<Location> getAllLine(double pointPerBlock) {
         List<Location> locations = new ArrayList<>();
         for(double d = 0; d < sections.get(sections.size()-1); d += pointPerBlock) {
@@ -45,6 +43,7 @@ public class LinearFunction implements Function<Double, Location> {
         return locations;
     }
 
+    @Override
     public List<Location> getAllLineOfDuration(long interval, long duration) {
         return getAllLine(totalSection/((double)duration/interval));
     }

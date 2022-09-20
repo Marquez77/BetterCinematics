@@ -2,18 +2,14 @@ package me.marquez.bettercinematics;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
-import me.marquez.bettercinematics.entity.Cinematic;
 import me.marquez.bettercinematics.utils.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Test {
+public class FileTest {
 
     @AllArgsConstructor
     @ToString

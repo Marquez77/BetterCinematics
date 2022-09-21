@@ -151,6 +151,10 @@ public class BetterCinematics extends JavaPlugin {
                         sender.sendMessage("Start preview");
                     }
                     PreviewType type = PreviewTypeRegistry.of(args[2]);
+                    if(type == null) {
+                        sender.sendMessage("Invalid type");
+                        break;
+                    }
                     if(!preview.getPreviewTypes().remove(type)) preview.getPreviewTypes().add(type);
                     break;
                 }

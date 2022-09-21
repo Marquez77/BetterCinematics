@@ -16,6 +16,6 @@ public class PreviewTypeRegistry {
     }
 
     public static PreviewType of(String nameOrAlias) {
-        return types.stream().filter(e -> e.getAlias().equalsIgnoreCase(nameOrAlias) || e.getName().equals(nameOrAlias)).findAny().orElse(null);
+        return types.stream().filter(e -> e.getAlias().equalsIgnoreCase(nameOrAlias) || e.getName().equalsIgnoreCase(nameOrAlias)).findAny().orElse(null);
     }
 }

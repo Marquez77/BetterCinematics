@@ -65,10 +65,10 @@ public class BasicPreviewType implements PreviewType {
         }),
         DIRECTION("dir", (cinematic, player) -> { //DIRECTION OF PLAYER LOOKS
             if(cinematic instanceof CalculatedCinematic cc) {
-                cc.getPathFunction().getAllLine(2D).forEach(loc -> {
-                    Vector vector = loc.getDirection();
-                    for(int i = 0; i < 10; i++) {
-                        DIRECTION_PARTICLE.showParticle(loc.clone().add(vector.multiply(i*0.1D)), player);
+                cc.getPathFunction().getAllLine(0.2D).forEach(loc -> {
+                    Vector vector = loc.getDirection().normalize();
+                    for(int i = 0; i < 15; i++) {
+                        DIRECTION_PARTICLE.showParticle(loc.clone().add(vector.clone().multiply(i*0.2D)), player);
                     }
                 });
             }

@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import me.marquez.bettercinematics.entity.Cinematic;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor

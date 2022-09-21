@@ -40,7 +40,7 @@ public class SplineUtils {
             }
         }
         return (index, t) -> {
-            if(index < functions.size() || (index == functions.size() && t == 0)) {
+            if(index < functions.size()) {
                 return functions.get(index).apply(t);
             }
             return null;

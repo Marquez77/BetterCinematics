@@ -33,7 +33,7 @@ public abstract class CinematicFunction implements PathFunction {
     public Location apply(Double aDouble) { //t: 0 ~ points.size()-1
         double t = aDouble;
         if(t < 0 || t > points.size()-1) return null; //Out of range
-        int index = (int)t;
+        int index = (int)(t-0.00000001D); //to make 3, 0 -> 2, 1
         float rate = (float)(t-index);
         Location result = applyFunction(index, rate);
         Location from = points.get(index);

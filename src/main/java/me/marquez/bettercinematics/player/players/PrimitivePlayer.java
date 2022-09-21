@@ -20,7 +20,7 @@ public class PrimitivePlayer extends CachedCinematicPlayer {
     public @NonNull CompletableFuture<Location> play(@NonNull CalculatedCinematic cinematic, @NonNull Player player, PlayOptions options) {
         if(taskIds.containsKey(player)) stop(player);
         CompletableFuture<Location> future = new CompletableFuture<>();
-        List<Location> locations = cinematic.getLineFunction().getAllLineOfDuration(options.getInterval(), options.getDuration());
+        List<Location> locations = cinematic.getPathFunction().getAllLineOfDuration(options.getInterval(), options.getDuration());
         Iterator<Location> iterator = locations.iterator();
         int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(BetterCinematics.getInstance(), () -> {
             if(iterator.hasNext()) {

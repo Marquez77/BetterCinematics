@@ -33,7 +33,7 @@ public class TrashCode extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand("bcinematics").setExecutor(this);
+        getCommand("bc").setExecutor(this);
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this, PacketType.Play.Client.POSITION_LOOK) {
             @Override

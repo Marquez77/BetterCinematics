@@ -1,24 +1,23 @@
 package me.marquez.bettercinematics.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import me.marquez.bettercinematics.functions.LinearFunction;
-import org.bukkit.Location;
-
-import java.util.function.Function;
+import me.marquez.bettercinematics.functions.PathFunction;
 
 @Getter
+@Setter
 public class CalculatedCinematic extends Cinematic{
 
-    @Setter
     private LinearFunction lineFunction;
-    @Setter
-    private Function<Double, Location> splineFunction;
+    private PathFunction splineFunction;
 
     public CalculatedCinematic(@NonNull String name) {
         super(name);
     }
 
-    public Function<Double, Location> getFunction() {
+    public PathFunction getPathFunction() {
         return splineFunction == null ? lineFunction : splineFunction;
     }
 }

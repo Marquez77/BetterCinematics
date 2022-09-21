@@ -6,9 +6,8 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinearFunction implements PathFunction {
+public class LinearFunction extends CinematicFunction {
 
-    private final List<Location> points;
     private final List<Double> sections;
     private final List<Vector> vectors; //point to point distance vector
     private final double totalSection;
@@ -18,38 +17,24 @@ public class LinearFunction implements PathFunction {
         sections = new ArrayList<>();
         sections.add(0D);
         vectors = new ArrayList<>();
-        if(points.size() > 1) {
+        if (points.size() > 1) {
             double sum = 0D;
-            for (int i = 0; i < points.size()-1; i++) {
+            for (int i = 0; i < points.size() - 1; i++) {
                 Location from = points.get(i);
-                Location to = points.get(i+1);
+                Location to = points.get(i + 1);
                 double distance = from.distance(to);
                 sum += distance;
                 sections.add(sum);
                 vectors.add(to.clone().subtract(from).toVector());
             }
             totalSection = sum;
-        }else {
+        } else {
             totalSection = 0;
         }
     }
 
     @Override
-    public List<Location> getAllLine(double pointPerBlock) {
-        List<Location> locations = new ArrayList<>();
-        for(double d = 0; d < sections.get(sections.size()-1); d += pointPerBlock) {
-            locations.add(apply(d));
-        }
-        return locations;
-    }
-
-    @Override
-    public List<Location> getAllLineOfDuration(long interval, long duration) {
-        return getAllLine(totalSection/((double)duration/interval));
-    }
-
-    @Override
-    public Location apply(Double t) {
+    public Location applyFunction(double t) {
         int i = sections.size()-1;
         for(; i > 0 && t < sections.get(i); i--);
         if(i == sections.size()-1) return null; //Over maximum
@@ -58,9 +43,6 @@ public class LinearFunction implements PathFunction {
         double ratio = (t-from)/(to-from);
         Location fromLoc = points.get(i);
         Location toLoc = points.get(i+1);
-        Location resultLoc = fromLoc.clone().add(vectors.get(i).clone().multiply(ratio));
-        resultLoc.setYaw(fromLoc.getYaw()+(toLoc.getYaw()-fromLoc.getYaw())*(float)ratio);
-        resultLoc.setPitch(fromLoc.getPitch()+(toLoc.getPitch()-fromLoc.getPitch())*(float)ratio);
-        return resultLoc;
+        return fromLoc.clone().add(vectors.get(i).clone().multiply(ratio));
     }
 }

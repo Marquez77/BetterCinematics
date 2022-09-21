@@ -37,16 +37,16 @@ public class BasicPreviewType implements PreviewType {
 
     private static ParticleUtils POSITION_PARTICLE = ParticleUtils.builder()
             .particle(Particle.REDSTONE)
-            .data(new Particle.DustOptions(Color.RED, 10F))
-            .count(10)
+            .data(new Particle.DustOptions(Color.RED, 8F))
+            .count(5)
             .build();
     private static ParticleUtils LINE_PARTICLE = ParticleUtils.builder()
             .particle(Particle.REDSTONE)
-            .data(new Particle.DustOptions(Color.BLUE, 1F))
+            .data(new Particle.DustOptions(Color.BLUE, 2F))
             .build();
     private static ParticleUtils CURVE_PARTICLE = ParticleUtils.builder()
             .particle(Particle.REDSTONE)
-            .data(new Particle.DustOptions(Color.GREEN, 1F))
+            .data(new Particle.DustOptions(Color.LIME, 2F))
             .build();
     enum Types {
         POSITION("pos", (cinematic, player) -> {
@@ -54,18 +54,14 @@ public class BasicPreviewType implements PreviewType {
         }), //SCENE POSITION (POINT)
         LINE("line", (cinematic, player) -> {
             if(cinematic instanceof CalculatedCinematic cc) {
-                cc.getLineFunction().getAllLine(0.5D).forEach(loc -> LINE_PARTICLE.showParticle(loc, player));
+                cc.getLineFunction().getAllLine(0.01D).forEach(loc -> LINE_PARTICLE.showParticle(loc, player));
                 //PreviewOption 등 만들어서 여러가지 설정할 수 있게 하기
             }
         }), //LINE OF POINT TO POINT
         DIRECTION("dir", (cinematic, player) -> {}), //DIRECTION OF PLAYER LOOKS
         CURVE("curve", (cinematic, player) -> {
             if(cinematic instanceof CalculatedCinematic cc) {
-                double t = 0;
-                while(t < cc.getPositions().size()-1) {
-                    CURVE_PARTICLE.showParticle(cc.getSplineFunction().apply(t), player);
-                    t += 0.01;
-                }
+                cc.getSplineFunction().getAllLine(0.01D).forEach(loc -> CURVE_PARTICLE.showParticle(loc, player));
             }
         }); //THE CURVES APPLIED EASE
 

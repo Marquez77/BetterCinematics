@@ -3,8 +3,8 @@ package me.marquez.bettercinematics.entity;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import me.marquez.bettercinematics.player.CinematicPlayer;
-import me.marquez.bettercinematics.player.players.PrimitivePlayer;
+import me.marquez.bettercinematics.players.CinematicPlayer;
+import me.marquez.bettercinematics.players.internal.PrimitivePlayer;
 
 @RequiredArgsConstructor
 public enum CinematicMode {

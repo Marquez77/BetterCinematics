@@ -3,7 +3,7 @@ package me.marquez.bettercinematics.entity;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import me.marquez.bettercinematics.functions.LinearFunction;
+import me.marquez.bettercinematics.functions.internal.LinearFunction;
 import me.marquez.bettercinematics.functions.PathFunction;
 
 @Getter

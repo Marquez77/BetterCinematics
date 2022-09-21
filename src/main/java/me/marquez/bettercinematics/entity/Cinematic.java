@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
-import me.marquez.bettercinematics.functions.LinearFunction;
-import me.marquez.bettercinematics.functions.SplineFunction;
-import me.marquez.bettercinematics.player.CinematicPlayer;
+import me.marquez.bettercinematics.functions.internal.LinearFunction;
+import me.marquez.bettercinematics.functions.internal.SplineFunction;
+import me.marquez.bettercinematics.players.CinematicPlayer;
 import org.bukkit.Location;
 
 import java.util.*;

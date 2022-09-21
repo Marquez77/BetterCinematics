@@ -2,6 +2,7 @@ package me.marquez.bettercinematics;
 
 import me.marquez.bettercinematics.utils.MathUtils;
 import me.marquez.bettercinematics.utils.SplineUtils;
+import me.marquez.bettercinematics.utils.XY;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,11 +40,11 @@ public class MathTest {
         graphic.setColor(Color.WHITE);
         graphic.fillRect(15, 15, 1294, 994);
         graphic.setColor(Color.BLUE);
-        java.util.List<SplineUtils.XY> array = Arrays.asList(new SplineUtils.XY(0D, 0D), new SplineUtils.XY(3D, 5D), new SplineUtils.XY(5D, 3D), new SplineUtils.XY(7D, 7D), new SplineUtils.XY(9D, 1D));
-        Function<Double, SplineUtils.XY> function = SplineUtils.getCubicSpline(array);
+        java.util.List<XY> array = Arrays.asList(new XY(0D, 0D), new XY(3D, 5D), new XY(5D, 3D), new XY(7D, 7D), new XY(9D, 1D));
+        Function<Double, XY> function = SplineUtils.getCubicSpline(array);
         double t = 0D;
         while(t < 4D) {
-            SplineUtils.XY xy = function.apply(t);
+            XY xy = function.apply(t);
             if(xy != null) {
                 double x = xy.getFirst();
                 double y = xy.getSecond();
@@ -52,7 +53,7 @@ public class MathTest {
             t += 0.001;
         }
         graphic.setColor(Color.RED);
-        for (SplineUtils.XY xy : array) {
+        for (XY xy : array) {
             double[] doubles = xy.toArray();
             graphic.fillOval((int) (doubles[0] * 100D)+96, (int) (doubles[1] * 100D)+96, 11, 11);
         }

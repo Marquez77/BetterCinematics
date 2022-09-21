@@ -1,9 +1,8 @@
 package me.marquez.bettercinematics.utils;
 
-import com.mojang.datafixers.util.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class SplineUtils {
@@ -21,36 +20,31 @@ public class SplineUtils {
             {0, 2, 0, 0}
     };
 
-    public static Function<Double, XY> getCubicSpline(List<XY> points) {
+    public static BiFunction<Integer, Double, XY> getCubicSpline(List<XY> points) {
         List<Function<Double, XY>> functions = new ArrayList<>();
         if(points.size() > 2) {
             //Point 1 to Point 2 -> quadratic function
-            {
-                double[][] result = MathUtils.matrixMultiply(quadraticMatrix, makeMatrix(points.subList(0, 3)));
-                functions.add(t -> new XY(executeQuadratic(functions.size() == 1 ? t/3D : t*0.5, result)));
-            }
+            double[][] beginMatrix = MathUtils.matrixMultiply(quadraticMatrix, makeMatrix(points.subList(0, 3)));
+            functions.add(t -> new XY(executeQuadratic(functions.size() == 1 ? t/3D : t*0.5, beginMatrix)));
             //Point 2 to Point N-2 -> cubic function
             if(points.size() > 3) {
                 int i = 1; //Point i to Point i+1
                 while (i <= points.size() - 3) { //The last when i+3 == points.size()
-                    double[][] result = MathUtils.matrixMultiply(cubicMatrix, makeMatrix(points.subList(i - 1, i + 3))); //i-1, i, i+1, i+2
-                    functions.add(t -> {
-                        return new XY(executeCubic(t, result));
-                    });
+                    double[][] matrix = MathUtils.matrixMultiply(cubicMatrix, makeMatrix(points.subList(i - 1, i + 3))); //i-1, i, i+1, i+2
+                    functions.add(t -> new XY(executeCubic(t, matrix)));
                     i++;
                 }
                 //Point N-1 to Point N -> quadratic function
-                double[][] result = MathUtils.matrixMultiply(quadraticMatrix, makeMatrix(points.subList(points.size() - 3, points.size())));
-                functions.add(t -> new XY(executeQuadratic(t*0.5D+0.5D, result)));
+                double[][] endMatrix = MathUtils.matrixMultiply(quadraticMatrix, makeMatrix(points.subList(points.size() - 3, points.size())));
+                functions.add(t -> new XY(executeQuadratic(t*0.5D+0.5D, endMatrix)));
             }
         }
-        return (t -> {
-            if(t < functions.size()) {
-                int index = (int)t.doubleValue();
-                return functions.get(index).apply(t-index);
+        return (index, t) -> {
+            if(index < functions.size()) {
+                return functions.get(index).apply(t);
             }
             return null;
-        });
+        };
     }
 
     private static double executeQuadratic(double t, double a, double b, double c) {
@@ -71,23 +65,9 @@ public class SplineUtils {
 
     private static double[][] makeMatrix(List<XY> points) {
         double[][] result = new double[points.size()][2];
-        for(int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             result[i] = points.get(i).toArray();
         }
         return result;
-    }
-
-    public static class XY extends Pair<Double, Double> {
-        public XY(Double first, Double second) {
-            super(first, second);
-        }
-
-        public XY(double[] array) {
-            this(array[0], array[1]);
-        }
-
-        public double[] toArray() {
-            return new double[] { getFirst(), getSecond() };
-        }
     }
 }

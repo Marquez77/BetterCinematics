@@ -1,36 +1,45 @@
 package me.marquez.bettercinematics.functions;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Location;
+import org.bukkit.World;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public abstract class CinematicFunction implements PathFunction {
 
-    @Getter
+    @NonNull
     protected List<Location> points;
 
-    protected CinematicFunction(List<Location> points) {
+    @Nullable
+    protected World world;
+
+    protected CinematicFunction(@NonNull List<Location> points) {
         this.points = points;
+        if(!points.isEmpty()) {
+            world = points.get(0).getWorld();
+        }
     }
 
-    //t: 0 ~ points.size()-1
-    abstract Location applyFunction(double t);
+    protected abstract Location applyFunction(int index, double rate);
 
     @Override
-    public Location apply(Double aDouble) {
+    public Location apply(Double aDouble) { //t: 0 ~ points.size()-1
         double t = aDouble;
         if(t < 0 || t > points.size()-1) return null; //Out of range
-        Location result = applyFunction(t);
         int index = (int)t;
-        float ratio = (float)(t-index);
+        float rate = (float)(t-index);
+        Location result = applyFunction(index, rate);
         Location from = points.get(index);
         Location to = points.get(index+1);
-        result.setYaw(from.getYaw()+(to.getYaw()-from.getYaw())*ratio);
-        result.setPitch(from.getPitch()+(to.getPitch()-from.getPitch())*ratio);
+        result.setYaw(from.getYaw()+(to.getYaw()-from.getYaw())*rate);
+        result.setPitch(from.getPitch()+(to.getPitch()-from.getPitch())*rate);
         return result;
     }
 
@@ -39,9 +48,10 @@ public abstract class CinematicFunction implements PathFunction {
     public List<Location> getAllLine(double interval) {
         return locationCache.computeIfAbsent(interval, k -> {
             List<Location> locations = new ArrayList<>();
-            for(double t = 0; t < points.size()-1; t += interval) {
-                locations.add(applyFunction(t));
+            for (double t = 0D; t < points.size()-1; t += interval) {
+                locations.add(apply(t));
             }
+            locations.add(apply((double)(points.size()-1)));
             return locations;
         });
     }

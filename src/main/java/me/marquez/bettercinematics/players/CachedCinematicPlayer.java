@@ -1,4 +1,4 @@
-package me.marquez.bettercinematics.player;
+package me.marquez.bettercinematics.players;
 
 import lombok.NonNull;
 import me.marquez.bettercinematics.entity.Cinematic;

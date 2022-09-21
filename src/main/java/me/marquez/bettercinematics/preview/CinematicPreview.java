@@ -18,13 +18,13 @@ public class CinematicPreview extends Thread {
     private Player viewer;
     @NonNull
     private Cinematic cinematic;
-    private Set<PreviewType> types = PreviewTypeRegistry.getAllTypes();
+    private Set<PreviewType> previewTypes = PreviewTypeRegistry.getAllTypes();
 
     @Override
     public void run() {
         try {
             while (!isInterrupted() && viewer.isOnline() && cinematic.isEnabled()) {
-                types.forEach(type -> type.playEffect(cinematic, viewer));
+                previewTypes.forEach(type -> type.playEffect(cinematic, viewer));
                 Thread.sleep(50); //every 1 tick
             }
         }catch(InterruptedException ignored) {}

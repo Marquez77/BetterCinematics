@@ -7,6 +7,8 @@ import me.marquez.bettercinematics.entity.Scene;
 import me.marquez.bettercinematics.entity.wrapper.WrappedLocation;
 import me.marquez.bettercinematics.preview.BasicPreviewType;
 import me.marquez.bettercinematics.preview.CinematicPreview;
+import me.marquez.bettercinematics.preview.PreviewType;
+import me.marquez.bettercinematics.preview.PreviewTypeRegistry;
 import me.marquez.bettercinematics.utils.FileUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -137,13 +139,19 @@ public class BetterCinematics extends JavaPlugin {
                 case "preview": {
                     if(args[1].equals("stop")) {
                         preview.interrupt();
+                        preview = null;
                         sender.sendMessage("Stop preview");
                         break;
                     }
-                    Cinematic cinematic = cinematicMap.get(args[1]);
-                    preview = new CinematicPreview(((Player)sender), cinematic);
-                    preview.start();
-                    sender.sendMessage("Start preview");
+                    if(preview == null) {
+                        Cinematic cinematic = cinematicMap.get(args[1]);
+                        preview = new CinematicPreview(((Player) sender), cinematic);
+                        preview.getPreviewTypes().clear();
+                        preview.start();
+                        sender.sendMessage("Start preview");
+                    }
+                    PreviewType type = PreviewTypeRegistry.of(args[2]);
+                    if(!preview.getPreviewTypes().remove(type)) preview.getPreviewTypes().add(type);
                     break;
                 }
                 case "play": {

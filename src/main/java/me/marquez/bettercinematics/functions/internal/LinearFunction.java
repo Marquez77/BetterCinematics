@@ -24,6 +24,11 @@ public class LinearFunction extends CinematicFunction {
     }
 
     @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @Override
     public Location applyFunction(int index, double rate) {
         Location fromLoc = points.get(index);
         return fromLoc.clone().add(vectors.get(index).clone().multiply(rate));

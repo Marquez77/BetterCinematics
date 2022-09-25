@@ -60,4 +60,9 @@ public abstract class CinematicFunction implements PathFunction {
     public List<Location> getAllLineOfDuration(long interval, long duration) {
         return getAllLine((points.size()-1)/((double)duration/interval));
     }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

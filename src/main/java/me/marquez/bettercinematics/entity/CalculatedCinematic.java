@@ -18,6 +18,6 @@ public class CalculatedCinematic extends Cinematic{
     }
 
     public PathFunction getPathFunction() {
-        return splineFunction == null ? lineFunction : splineFunction;
+        return splineFunction == null || !splineFunction.isValid() ? lineFunction : splineFunction;
     }
 }

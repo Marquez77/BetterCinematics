@@ -11,6 +11,7 @@ import java.util.function.BiFunction;
 
 public class SplineFunction extends CinematicFunction {
 
+    public final boolean isValid;
     private final BiFunction<Integer, Double, XY> xzFunction;
     private final BiFunction<Integer, Double, XY> yFunction;
 
@@ -23,9 +24,16 @@ public class SplineFunction extends CinematicFunction {
                 list.add(XY.of(i, points.get(i).getY()));
             }
             yFunction = SplineUtils.getCubicSpline(list);
+            isValid = true;
         }else {
             xzFunction = yFunction = (index, rate) -> XY.of(0D, 0D);
+            isValid = false;
         }
+    }
+
+    @Override
+    public boolean isValid() {
+        return isValid;
     }
 
     @Override

@@ -26,7 +26,8 @@ import java.util.Optional;
 
 public class BetterCinematics extends JavaPlugin {
 
-    private Map<String, Cinematic> cinematicMap = new HashMap<>();
+    private final Map<String, Cinematic> cinematicMap = new HashMap<>();
+    public Map<String, Cinematic> getCinematicMap() { return cinematicMap; }
 
     private static BetterCinematics instance;
 

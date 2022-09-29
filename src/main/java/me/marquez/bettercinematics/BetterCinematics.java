@@ -45,6 +45,10 @@ public class BetterCinematics extends JavaPlugin {
         }
         Optional.ofNullable(getCommand("bcm")).ifPresent(command -> command.setExecutor(this));
         BasicPreviewType.initialize();
+        reloadFiles();
+    }
+
+    private void reloadFiles() {
         File cinematicDirectory = new File(getDataFolder(), "cinematics");
         if(cinematicDirectory.exists()) {
             File[] files = cinematicDirectory.listFiles();
@@ -162,6 +166,12 @@ public class BetterCinematics extends JavaPlugin {
                 case "play": {
                     CalculatedCinematic cinematic = (CalculatedCinematic)cinematicMap.get(args[1]);
                     cinematic.getPlayer().play(cinematic, ((Player)sender), PlayOptions.builder().interval(Long.parseLong(args[2])).duration(Long.parseLong(args[3])).build());
+                    break;
+                }
+                case "reload": {
+                    reloadFiles();
+                    sender.sendMessage("Reloaded files.");
+                    break;
                 }
             }
         }

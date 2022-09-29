@@ -17,7 +17,7 @@ public class SplineFunction extends CinematicFunction {
 
     public SplineFunction(List<Location> points) {
         super(points);
-        if(points.size() > 2) {
+        if(points.size() > 3) {
             xzFunction = SplineUtils.getCubicSpline(points.stream().map(loc -> XY.of(loc.getX(), loc.getZ())).toList());
             List<XY> list = new ArrayList<>();
             for (int i = 0; i < points.size(); i++) {
